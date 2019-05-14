@@ -21,9 +21,9 @@ def zahtevaj_vnos():
     vnos = input('Poskusi uganit crko: ')
     return vnos
 
-def preveri_vnos():
+def preveri_vnos(vnos):
     '''Funkcija vrne True, ce je vnos primeren, sicer igralca opozori in vrne False'''
-    if len(vnos) == 1:
+    if len(vnos) != 1:
         print('Neveljaven vnos! Vnesi zgolj eno crko!')
         return False
     else:
