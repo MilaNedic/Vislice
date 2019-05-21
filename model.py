@@ -7,6 +7,7 @@ PRAVILNA_CRKA = '+'
 NAPACNA_CRKA = '-'
 PONOVLJENA_CRKA = 'o'
 
+ZACETEK = 'S'
 ZMAGA = 'W'
 PORAZ = 'X'
 
@@ -88,3 +89,41 @@ with open("besede.txt", 'r', encoding='utf-8') as datoteka:
 def nova_igra():
     geslo = random.choice(bazen_besed)
     return Igra(geslo, [])
+
+
+class Vislice:
+
+    def __init__(self):
+        # v slovarju igre ima vsaka igra svoj ID
+        # ID je celo stevilo
+        self.igre = {} 
+        return 
+
+    def prost_id_igre(self):
+        if self.igre == {}:
+            return 0
+        else:
+            # preverimo, katero od prvih n+1 stevil
+            # se ni uporabljeno za id 'n' iger
+            for i in range(len(self.igre) + 1):
+                if i not in self.igre.keys():
+                    return i
+
+
+    def nova_igra(self):
+        # naredi novo igro z nakljucnim geslom
+        igra = nova_igra()
+        nov_id = self.prost_id_igre()
+
+        # shrani (ZACETEK, igra) v slovar z novim ID
+        self.igre[nov_id] = (igra, ZACETEK)
+        return nov_id
+
+    def ugibaj(self, id_igre, crka):
+        # pridobi igro
+        (igra, _) = self.igre[id_igre]
+        # ugibaj
+        nov_poskus = igra.ugibaj(crka)
+        #shrani rezultat poskusa v slvoar
+        self.igre[id_igre] = (igra, nov_poskus)
+        return
